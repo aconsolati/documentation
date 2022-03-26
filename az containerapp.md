@@ -21,7 +21,7 @@ To delete resource group:
 
 ```
 # set var to name of private acr
-$acrName = <name of container registry>
+$acrName = "acrname"
 
 # get the ACR password
 $password = az acr credential show -n $acrName --query "passwords[0].value"  -o tsv
@@ -38,6 +38,14 @@ az containerapp create `
 	--target-port 80 `
 	--ingress 'external' `
 	--query configuration.ingress.fqdn
+```
+
+### Azure Container Instances
+* Low-level access than Container apps
+* Tutorial: https://markheath.net/post/build-container-images-with-acr
+```
+# get the ACR password
+$password = az acr credential show -n $acrName --query "passwords[0].value"  -o tsv
 
 # create a new ACI instance to run this container
 az container create -n samplewebapp -g $resourceGroup `
@@ -47,7 +55,3 @@ az container create -n samplewebapp -g $resourceGroup `
             -e TestSetting=ACI `
             --dns-name-label samplewebapp --ports 80
 ```
-
-### Azure Container Instances
-* More low-level than Container apps
-* Tutorial: https://markheath.net/post/build-container-images-with-acr
