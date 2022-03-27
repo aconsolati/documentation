@@ -1,6 +1,9 @@
 ## Using Azure Container registry (ACR)
-`az` commands for creating resource group and acr:
+Tutorial with commands for creating docker image, creating container registry and pushing up image:
 https://docs.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-app
+
+Creating and managing the ACR registry:
+https://docs.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-acr
 
 ### General ACR commands
 ```
