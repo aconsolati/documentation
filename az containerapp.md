@@ -1,4 +1,4 @@
-## Comparison between different serverless app environments:
+## Comparison between different serverless Azure App options:
 https://docs.microsoft.com/en-us/azure/container-apps/compare-options
 
 Container app deployment notes:
