@@ -18,10 +18,10 @@ docker build -t myimagename:v1 .
 # Verify image is available
 docker images
 
-# Run the container (interactively)
+# Run the container interactively, remove when finished
 docker run -it --rm -p 8080:80 myimagename:v1
 
-# Run the container (as background daemon with nice display name)
+# Run the container (as background daemon with a display name)
 docker run -name <display-name> -d -p 8080:80 myimagename:v1
 
 # List all running containers

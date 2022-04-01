@@ -1,5 +1,5 @@
-## Comparison between different serverless Azure App options:
-https://docs.microsoft.com/en-us/azure/container-apps/compare-options
+## az containerapp CLI reference
+https://docs.microsoft.com/en-us/cli/azure/containerapp?view=azure-cli-latest&preserve-view=true
 
 Container app deployment notes:
 1. Resource group: container-app-test
@@ -18,19 +18,28 @@ To delete resource group:
 * az group delete --name <resource-group-name>
 
 ### Deploy Container App
-
+Setup session variables for deployment
 ```
+$RESOURCE_GROUP="my-container-apps"
+$CONTAINERAPPS_ENVIRONMENT="my-environment"
+
 # set var to name of private acr
 $acrName = "acrname"
 
 # get the ACR password
 $password = az acr credential show -n $acrName --query "passwords[0].value"  -o tsv
+```
+
+Deploy the image into a new container app:
+```
+$CONTAINERAPP_NAME = "new-container-app"
+$CONTAINERAPP_IMAGE = "$acrname.azurecr.io/aci-tutorial-app:v1"
 
 # create the container app from the registry image
 az containerapp create `
-	--name my-container-app `
+	--name $CONTAINERAPP_NAME `
 	--resource-group $RESOURCE_GROUP `
-	--image "$acrname.azurecr.io/aci-tutorial-app:v1" `
+	--image $CONTAINERAPP_IMAGE `
 	--environment $CONTAINERAPPS_ENVIRONMENT `
 	--registry-login-server "$acrname.azurecr.io" `
 	--registry-username "$acrname" `
@@ -38,6 +47,13 @@ az containerapp create `
 	--target-port 80 `
 	--ingress 'external' `
 	--query configuration.ingress.fqdn
+```
+Update the app from a new container image
+```
+az containerapp update `
+	--name $CONTAINERAPP_NAME `
+	--resource-group $RESOURCE_GROUP `
+    --image $CONTAINERAPP_IMAGE
 ```
 
 ### Azure Container Instances
@@ -55,3 +71,6 @@ az container create -n samplewebapp -g $resourceGroup `
             -e TestSetting=ACI `
             --dns-name-label samplewebapp --ports 80
 ```
+
+## Comparison between different serverless Azure App options:
+https://docs.microsoft.com/en-us/azure/container-apps/compare-options
